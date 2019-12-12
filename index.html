@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    /> -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Weather Dashboard</title>
+  </head>
+
+  <body>
+    <header>
+      <h1 class="display-4">Weather Dashboard</h1>
+   </header>
+    <div class="container">
+        
+      <div class="row">
+        <div class="col-4">
+            <h4 id="searchtitle">Search for a City</h4>
+            <textarea id = "search-text"></textarea>
+            <button type="submit" id="searchbtn"><i class="fa fa-search"></i></button>
+            
+            <ul>
+               <div class="history"> <li>Seattle</li></div>
+               <div class="history"> <li>Seattle</li></div>
+               <div class="history"> <li>Seattle</li></div>
+               <div class="history"> <li>Seattle</li></div>
+            </ul>
+            
+        </div>
+        <div class="col-8 ">
+            <div class = "row current-weather">
+                <!-- <h3>Seattle </h3>
+            </div>
+            <div class = "row current-weather"><p>temp</p></div>    
+            <div class = "row current-weather"><p>temp</p></div>           -->
+                 
+                  
+
+            </div>
+            <div class = "row 5day">
+
+            </div>
+         
+        </div>
+      </div>   
+            
+
+     
+     
+
+      
+   </div> <!--End Container Div-->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="./script.js"></script>
+  </body>
+
+
+</html>
+
