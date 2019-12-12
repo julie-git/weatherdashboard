@@ -20,12 +20,17 @@ $("#searchbtn").on("click", function() {
       // After the data comes back from the API
       .then(function(response) {
 
+        //save city name to local storage
+        // localStorage.setItem(cityname);
+
         console.log(response);
 
         /******Today's Date */
         // Get city name
         cityname = response.name;
         console.log("city= " + cityname);
+        //save city name to local storage
+        // localStorage.setItem(cityname);
         //Get date
         todaydate = "12/11/19";
         //create jquary for the date
@@ -33,6 +38,7 @@ $("#searchbtn").on("click", function() {
         var todaycity = $("<h3>").text(cityname + " ("+todaydate + ")");
         //add class to today city
         todaycity.addClass("today-city");
+      
         $(".current-weather").append(todaycity);
                 //***************get the icon
         // var wicon = response.weather[0].icon;
@@ -45,8 +51,8 @@ $("#searchbtn").on("click", function() {
          var humdisplay = $("<p>").text("Humidity: " + humidity + "%");
         humdisplay.addClass("today-disp");
         var newHum = newDiv.append(humdisplay);
-          $(".row current-humid").appendTo( ".today-city" );
-        // $(".current-weather").append(humdisplay);
+          // $(".row current-humid").appendTo( ".today-city" );
+        $(".current-weather").append(humdisplay);
         //  $(".5day").prepend(humdisplay);
 
         //get temp
@@ -54,13 +60,14 @@ $("#searchbtn").on("click", function() {
         console.log("temp=" + temp);
         var tempdisplay= $("<p>").text("Temperature: " + temp + "°F");
          tempdisplay.addClass("today-disp");
-         $(".5day").prepend(tempdisplay);
+         $(".current-weather").append(tempdisplay);
+        //  $(".5day").prepend(tempdisplay);
 
         //get windspeed
         var windspeed = response.wind.speed;
         var windisplay = $("<p>").text("Wind Speed: " + windspeed + " MPH");
          windisplay.addClass("today-disp");
-         $(".5day").prepend(windisplay);
+         $(".current-weather").append(windisplay);
 
 
         //get Uv index
