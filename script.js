@@ -1,11 +1,11 @@
 
-
+var cityname="";
 
 // Event listener for all button elements
 $("#searchbtn").on("click", function() {
     event.preventDefault();
     // In this case, the "this" keyword refers to the button that was clicked
-     var cityname = $("#search-text").val();
+     cityname = $("#search-text").val();
      console.log("searchbtn city=" + cityname);
 
     // Constructing a URL to search Giphy for the name of the person who said the quote
@@ -25,6 +25,10 @@ $("#searchbtn").on("click", function() {
 
         console.log(response);
 
+        displayToday();
+
+        function displayToday(){
+
         /******Today's Date */
         // Get city name
         cityname = response.name;
@@ -32,48 +36,80 @@ $("#searchbtn").on("click", function() {
         //save city name to local storage
         // localStorage.setItem(cityname);
         //Get date
-        todaydate = "12/11/19";
+        todaydate = moment().format('dddd, MMMM D, YYYY');
         //create jquary for the date
         // var newdiv= $(".row").addClass("row current-weather");
-        var todaycity = $("<h3>").text(cityname + " ("+todaydate + ")");
+        // var todaycity = $("<h3>").text(cityname + " ("+todaydate + ")");
+        $("#today-city").text(cityname + " (" +todaydate + ")");
         //add class to today city
-        todaycity.addClass("today-city");
+        // todaycity.addClass("today-city");
       
-        $(".current-weather").append(todaycity);
+        //  $(".current-weather").append(today-city);
                 //***************get the icon
-        // var wicon = response.weather[0].icon;
-        // var wiconEl = $("<i>").addClass(wicon);
-        // $(".today-city").append(wiconEl);
+        var wicon = response.weather[0].icon;
+       var wiconEl = $("<i>").addClass(wicon);
+       $("#today-city").append(wiconEl);
 
         //get humidity
         var humidity = response.main.humidity;
-        var newDiv =$("<div>").addClass("row current-humid");
-         var humdisplay = $("<p>").text("Humidity: " + humidity + "%");
-        humdisplay.addClass("today-disp");
-        var newHum = newDiv.append(humdisplay);
-          // $(".row current-humid").appendTo( ".today-city" );
-        $(".current-weather").append(humdisplay);
-        //  $(".5day").prepend(humdisplay);
+        // var newDiv =$("<div>").addClass("row current-humid");
+        //  var humdisplay = $("<p>").text("Humidity: " + humidity + "%");
+        // $("#qtitle strong").html("YourNewText")
+        var humdisplay = "Humidity: " + humidity + "%";
+         $("#current-humid").text(humdisplay);
+        // humdisplay.addClass("today-disp");
+        // var newHum = newDiv.append(humdisplay);
+        //   // $(".row current-humid").appendTo( ".today-city" );
+        // $(".current-weather").append(humdisplay);
+        // //  $(".5day").prepend(humdisplay);
 
         //get temp
         var temp = response.main.temp;
-        console.log("temp=" + temp);
-        var tempdisplay= $("<p>").text("Temperature: " + temp + "°F");
-         tempdisplay.addClass("today-disp");
-         $(".current-weather").append(tempdisplay);
+        // console.log("temp=" + temp);
+        // var tempdisplay= $("<p>").text("Temperature: " + temp + "°F");
+        $("#current-temp").text("Temperature: " + temp + "°F");
+        //  tempdisplay.addClass("today-disp");
+        //  $(".current-weather").append(tempdisplay);
         //  $(".5day").prepend(tempdisplay);
 
         //get windspeed
         var windspeed = response.wind.speed;
-        var windisplay = $("<p>").text("Wind Speed: " + windspeed + " MPH");
-         windisplay.addClass("today-disp");
-         $(".current-weather").append(windisplay);
-
-
+        // var windisplay = $("<p>").text("Wind Speed: " + windspeed + " MPH");
+        //  windisplay.addClass("today-disp");
+        //  $(".current-weather").append(windisplay);
+        $("#current-wind").text("Wind Speed: " + windspeed + " MPH");
+        
         //get Uv index
 
+
+        getFiveDay();
         
-        
+        } 
+      });
+    });
+
+      function getFiveDay(){
+          // Constructing a URL to search Giphy for the name of the person who said the quote
+      //  var queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+ cityname + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c";  //today's forcast
+        var queryURL2 = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityname + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c"; //5day forecast
+        // var queryURL= "http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID=86689c86634b54250ac08a4458bd5c6c" ;                                                             
+        // Performing our AJAX GET request
+        $.ajax({
+          url: queryURL2,
+          method: "GET"
+        })
+          // After the data comes back from the API
+          .then(function(response) {
+
+            console.log("getFiveDay");
+            console.log(response);
+
+
+          });
+
+
+
+      }
 
        // var humidity = response.main.humidity;
 
@@ -109,5 +145,5 @@ $("#searchbtn").on("click", function() {
         //     $("#gifs-appear-here").prepend(gifDiv);
         //   }
         // }
-      });
-  });
+      // });
+  // });

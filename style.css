@@ -17,10 +17,25 @@ h1{
 ul{
     list-style: none;
     border: 2px;
-    border-color: tomato;
+    /* border-color: tomato; */
 }
 
 .history{
     border: 2px;
-    border-color: tomato;
+    /* border-color: tomato; */
 }
+
+.card-header:first-child {
+    border-radius: 0;
+  }
+
+
+ /* .empty-col{
+     width:100%;
+} */
+
+.5daybox{
+    width: 40px;
+}
+
+
