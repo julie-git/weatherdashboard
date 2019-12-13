@@ -1,13 +1,12 @@
 h1{
  text-align: center;
-
 }
 
-
+/* 
 .current-weather{
     border: 10px;
     border-color: red;
-}
+} */
 
 .display-4{
     background: lightslategray;
@@ -30,12 +29,9 @@ ul{
   }
 
 
- /* .empty-col{
-     width:100%;
-} */
-
-.5daybox{
-    width: 40px;
+.5daybox .card{
+    width: 100%;
+    background: blue;
 }
 
 

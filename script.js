@@ -104,6 +104,24 @@ $("#searchbtn").on("click", function() {
             console.log("getFiveDay");
             console.log(response);
 
+            var days=0;
+            //read in 5 day into an array
+            for (var i=0; i <6 ;i++) {
+              var indate = response.list[i].dt_txt;
+              days++;
+              var tempdate = moment().add(days, 'days');
+              var indate =  moment(tempdate).format('MMMM D, YYYY')
+              // indate = moment().format('dddd, MMMM D, YYYY');
+              console.log("i="+ i + "date=" + indate);
+
+              var intemp = response.list[i].main.temp;
+              console.log("temp=" + intemp);
+
+              var inhumid = response.list[i].main.humidity;
+              inhumid = inhumid + " %";
+              console.log("humidity=" + inhumid);
+            
+            }
 
           });
 
