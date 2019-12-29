@@ -1,5 +1,6 @@
 
 var cityname="";
+var saveSearch=[];
 
 // Event listener for all button elements
 $("#searchbtn").on("click", function() {
@@ -20,8 +21,8 @@ $("#searchbtn").on("click", function() {
       // After the data comes back from the API
       .then(function(response) {
 
-        //save city name to local storage
-        // localStorage.setItem(cityname);
+  
+
 
         console.log(response);
 
@@ -47,31 +48,25 @@ $("#searchbtn").on("click", function() {
         //  $(".current-weather").append(today-city);
                 //***************get the icon
         var wicon = response.weather[0].icon;
-       var wiconEl = $("<i>").addClass(wicon);
-       $("#today-city").append(wiconEl);
+        var wiconurl = "http://openweathermap.org/img/w/" + wicon + ".png"
+         console.log(wiconurl);
+        //  var wiconEl = $("<img>").addClass("wiconEl");
+         $('#today-icon').attr('src',wiconurl);
+         $('#today-icon').attr('alt',"weather icon");
+      //  $("#today-city").append(wiconEl);
 
         //get humidity
         var humidity = response.main.humidity;
-        // var newDiv =$("<div>").addClass("row current-humid");
-        //  var humdisplay = $("<p>").text("Humidity: " + humidity + "%");
-        // $("#qtitle strong").html("YourNewText")
-        var humdisplay = "Humidity: " + humidity + "%";
+         var humdisplay = "Humidity: " + humidity + "%";
          $("#current-humid").text(humdisplay);
-        // humdisplay.addClass("today-disp");
-        // var newHum = newDiv.append(humdisplay);
-        //   // $(".row current-humid").appendTo( ".today-city" );
-        // $(".current-weather").append(humdisplay);
-        // //  $(".5day").prepend(humdisplay);
+        
 
         //get temp
         var temp = response.main.temp;
         // console.log("temp=" + temp);
         // var tempdisplay= $("<p>").text("Temperature: " + temp + "°F");
         $("#current-temp").text("Temperature: " + temp + "°F");
-        //  tempdisplay.addClass("today-disp");
-        //  $(".current-weather").append(tempdisplay);
-        //  $(".5day").prepend(tempdisplay);
-
+        
         //get windspeed
         var windspeed = response.wind.speed;
         // var windisplay = $("<p>").text("Wind Speed: " + windspeed + " MPH");
@@ -83,6 +78,8 @@ $("#searchbtn").on("click", function() {
 
 
         getFiveDay();
+        showCity();
+        saveCity();
         
         } 
       });
@@ -92,7 +89,7 @@ $("#searchbtn").on("click", function() {
           // Constructing a URL to search Giphy for the name of the person who said the quote
       //  var queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+ cityname + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c";  //today's forcast
         var queryURL2 = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityname + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c"; //5day forecast
-        // var queryURL= "http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID=86689c86634b54250ac08a4458bd5c6c" ;                                                             
+                                                           
         // Performing our AJAX GET request
         $.ajax({
           url: queryURL2,
@@ -107,20 +104,30 @@ $("#searchbtn").on("click", function() {
             var days=0;
             //read in 5 day into an array
             for (var i=0; i <6 ;i++) {
-              var indate = response.list[i].dt_txt;
-              days++;
+              // var indate = response.list[i].dt_txt;
+             
               var tempdate = moment().add(days, 'days');
-              var indate =  moment(tempdate).format('MMMM D, YYYY')
+              var indate =  moment(tempdate).format('MM/DD/YYYY')
               // indate = moment().format('dddd, MMMM D, YYYY');
               console.log("i="+ i + "date=" + indate);
+              $('#date-' +i).text(indate);
+
+              var tempicon = response.list[i].weather[0].icon;
+              console.log("tempicon=" +tempicon)
+              var iconurl = "http://openweathermap.org/img/w/" + tempicon + ".png"
+              console.log(iconurl);
+              $('#tempicon-'+i).attr('src',iconurl);
 
               var intemp = response.list[i].main.temp;
               console.log("temp=" + intemp);
+              $('#temp-'+i).text("Temp: " + intemp +"°F")
 
               var inhumid = response.list[i].main.humidity;
               inhumid = inhumid + " %";
-              console.log("humidity=" + inhumid);
-            
+              console.log("Humidity: " + inhumid);
+              $('#humid-'+i).text(inhumid);
+               
+              days++;
             }
 
           });
@@ -129,39 +136,52 @@ $("#searchbtn").on("click", function() {
 
       }
 
-       // var humidity = response.main.humidity;
+      function getUVIndex(){
+        var queryURL3 = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityname + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c"; //5day forecast
+        // var queryURL= "http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID=86689c86634b54250ac08a4458bd5c6c" ;                                                             
+        // Performing our AJAX GET request
+        $.ajax({
+          url: queryURL2,
+          method: "GET"
+        })
+          // After the data comes back from the API
+          .then(function(response) {
 
-        
-       // var windspeed = response.wind.speed;
+            console.log("getUVIndex");
+            console.log(response);
 
-        // // Looping over every result item
-        // for (var i = 0; i < results.length; i++) {
 
-        //   // Only taking action if the photo has an appropriate rating
-        //   if (results[i].rating !== "r" && results[i].rating !== "pg-13") {
-        //     // Creating a div for the gif
-        //     var gifDiv = $("<div>");
 
-        //     // Storing the result item's rating
-        //     var rating = results[i].rating;
 
-        //     // Creating a paragraph tag with the result item's rating
-        //     var p = $("<p>").text("Rating: " + rating);
+      });
+     }
 
-        //     // Creating an image tag
-        //     var personImage = $("<img>");
+     function saveCity(){
+       console.log("savecity");
+       
+       saveSearch.push(cityname);
+       localStorage.setItem("Searches", JSON.stringify(saveSearch));
+      console.log("pushed city="+ cityname);
+      console.log(saveSearch);
+      
+     }
 
-        //     // Giving the image tag an src attribute of a proprty pulled off the
-        //     // result item
-        //     personImage.attr("src", results[i].images.fixed_height.url);
+     function showCity(){
+       console.log("showcity");
+      if (localStorage.getItem("Searches") === null) {
+      // do nothing
+      }else{
+        let retrievedData = localStorage.getItem("Searches");
+        let recentArr = JSON.parse(retrievedData);
 
-        //     // Appending the paragraph and personImage we created to the "gifDiv" div we created
-        //     gifDiv.append(p);
-        //     gifDiv.append(personImage);
+        // recentArr.forEach(element => console.log(element));
+        recentArr.forEach(function(city){
+        console.log(city);
+        var newbox = $("<div>");
+        newbox.addClass("row card");
+        newbox.text(city);
+        $('#historybox').append(newbox);
 
-        //     // Prepending the gifDiv to the "#gifs-appear-here" div in the HTML
-        //     $("#gifs-appear-here").prepend(gifDiv);
-        //   }
-        // }
-      // });
-  // });
+        });
+       
+     }}
