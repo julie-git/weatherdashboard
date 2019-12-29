@@ -21,67 +21,14 @@ $("#searchbtn").on("click", function() {
       // After the data comes back from the API
       .then(function(response) {
 
-  
+          console.log(response);
 
-
-        console.log(response);
-
-        displayToday();
-
-        function displayToday(){
-
-        /******Today's Date */
-        // Get city name
-        cityname = response.name;
-        console.log("city= " + cityname);
-        //save city name to local storage
-        // localStorage.setItem(cityname);
-        //Get date
-        todaydate = moment().format('dddd, MMMM D, YYYY');
-        //create jquary for the date
-        // var newdiv= $(".row").addClass("row current-weather");
-        // var todaycity = $("<h3>").text(cityname + " ("+todaydate + ")");
-        $("#today-city").text(cityname + " (" +todaydate + ")");
-        //add class to today city
-        // todaycity.addClass("today-city");
-      
-        //  $(".current-weather").append(today-city);
-                //***************get the icon
-        var wicon = response.weather[0].icon;
-        var wiconurl = "http://openweathermap.org/img/w/" + wicon + ".png"
-         console.log(wiconurl);
-        //  var wiconEl = $("<img>").addClass("wiconEl");
-         $('#today-icon').attr('src',wiconurl);
-         $('#today-icon').attr('alt',"weather icon");
-      //  $("#today-city").append(wiconEl);
-
-        //get humidity
-        var humidity = response.main.humidity;
-         var humdisplay = "Humidity: " + humidity + "%";
-         $("#current-humid").text(humdisplay);
-        
-
-        //get temp
-        var temp = response.main.temp;
-        // console.log("temp=" + temp);
-        // var tempdisplay= $("<p>").text("Temperature: " + temp + "°F");
-        $("#current-temp").text("Temperature: " + temp + "°F");
-        
-        //get windspeed
-        var windspeed = response.wind.speed;
-        // var windisplay = $("<p>").text("Wind Speed: " + windspeed + " MPH");
-        //  windisplay.addClass("today-disp");
-        //  $(".current-weather").append(windisplay);
-        $("#current-wind").text("Wind Speed: " + windspeed + " MPH");
-        
-        //get Uv index
-
-
+        displayToday(response);
         getFiveDay();
         showCity();
         saveCity();
         
-        } 
+         
       });
     });
 
@@ -136,12 +83,65 @@ $("#searchbtn").on("click", function() {
 
       }
 
-      function getUVIndex(){
-        var queryURL3 = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityname + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c"; //5day forecast
+      function displayToday(response){
+
+        /******Today's Date */
+        // Get city name
+        cityname = response.name;
+        console.log("city= " + cityname);
+        //save city name to local storage
+        // localStorage.setItem(cityname);
+        //Get date
+        todaydate = moment().format('dddd, MMMM D, YYYY');
+        //create jquary for the date
+        // var newdiv= $(".row").addClass("row current-weather");
+        // var todaycity = $("<h3>").text(cityname + " ("+todaydate + ")");
+        $("#today-city").text(cityname + " (" +todaydate + ")");
+        //add class to today city
+        // todaycity.addClass("today-city");
+      
+        //  $(".current-weather").append(today-city);
+                //***************get the icon
+        var wicon = response.weather[0].icon;
+        var wiconurl = "http://openweathermap.org/img/w/" + wicon + ".png"
+         console.log(wiconurl);
+        //  var wiconEl = $("<img>").addClass("wiconEl");
+         $('#today-icon').attr('src',wiconurl);
+         $('#today-icon').attr('alt',"weather icon");
+      //  $("#today-city").append(wiconEl);
+
+        //get humidity
+        var humidity = response.main.humidity;
+         var humdisplay = "Humidity: " + humidity + "%";
+         $("#current-humid").text(humdisplay);
+        
+
+        //get temp
+        var temp = response.main.temp;
+        // console.log("temp=" + temp);
+        // var tempdisplay= $("<p>").text("Temperature: " + temp + "°F");
+        $("#current-temp").text("Temperature: " + temp + "°F");
+        
+        //get windspeed
+        var windspeed = response.wind.speed;
+        // var windisplay = $("<p>").text("Wind Speed: " + windspeed + " MPH");
+        //  windisplay.addClass("today-disp");
+        //  $(".current-weather").append(windisplay);
+        $("#current-wind").text("Wind Speed: " + windspeed + " MPH");
+        
+        //get Uv index
+        let lat = response.coord.lat;
+        let long= response.coord.lon;
+        console.log("long=" + long + "  lat = "+ lat);
+        getUVIndex(lat,long);
+      }
+
+      function getUVIndex(lat,long){
+        var queryURL3 = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + long + "&APPID=86689c86634b54250ac08a4458bd5c6c"; //5day forecast
         // var queryURL= "http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID=86689c86634b54250ac08a4458bd5c6c" ;                                                             
         // Performing our AJAX GET request
         $.ajax({
-          url: queryURL2,
+          url: queryURL3,
           method: "GET"
         })
           // After the data comes back from the API
@@ -149,7 +149,9 @@ $("#searchbtn").on("click", function() {
 
             console.log("getUVIndex");
             console.log(response);
-
+            var uvindex = response.value;
+            console.log(uvindex);
+            $("#current-uv").text("UV Index: " + uvindex);
 
 
 
@@ -178,7 +180,7 @@ $("#searchbtn").on("click", function() {
         recentArr.forEach(function(city){
         console.log(city);
         var newbox = $("<div>");
-        newbox.addClass("row card");
+        newbox.addClass("row card savecard");
         newbox.text(city);
         $('#historybox').append(newbox);
 
