@@ -23,14 +23,14 @@
     <title>Weather Dashboard</title>
   </head>
 
-  <body>
+  <body onload= "displayLastSearch()">
     <header>
       <h1 class="display-4">Weather Dashboard</h1>
    </header>
     <div class="container">
         
       <div class="row">
-        <div class="col-4">
+        <div class="col-3">
             <h4 id="searchtitle">Search for a City</h4>
             <textarea id = "search-text"></textarea>
             <button type="submit" id="searchbtn"><i class="fa fa-search"></i></button>
@@ -60,34 +60,34 @@
                     <h3>5-Day Forecast</h3>
                   </div> 
               <div class = "row daybox">
-                 <div class="card daycard">
+                 <div class="card text-center daycard">
                    <h5 id="date-0">Date</h5>
                   <img id="tempicon-0" alt="Weather icon">
                    <p id="temp-0"></p>
                    <p id="humid-0"></p>
                  </div>
-                 <div class= "card daycard">
+                 <div class= "card text-center daycard">
                     <h5 id="date-1">Date</h5>
                     <img id="tempicon-1" alt="Weather icon">
                     <i id="tempicon-1"></i>
                     <p id="temp-1">temp:</p>
                     <p id="humid-1">humid</p>
                  </div>
-                   <div class= "card daycard"> 
+                   <div class= "card text-center daycard"> 
                     <h5 id="date-2">Date</h5>
                     <img id="tempicon-2" alt="Weather icon">
                     <i id="tempicon-2"></i>
                     <p id="temp-2">temp:</p>
                     <p id="humid-2">humid</p>
                    </div>
-               <div class= "card daycard">
+               <div class= "card text-center daycard">
                  <h5 id="date-3">Date</h5>
                  <img id="tempicon-3" alt="Weather icon">
                  <i id="tempicon-3"></i>
                  <p id="temp-3"></p>
                  <p id="humid-3"></p>
                </div>
-                <div class= "card daycard">
+                <div class= "card text-center daycard">
                   <h5 id="date-4">Date</h5>
                   <img id="tempicon-4" alt="Weather icon">
                   <i id="tempicon-4"></i>
@@ -110,7 +110,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./script.js"></script>
-  </body>
+  </bodyonload="myFunction()>
 
 
 </html>

@@ -2,6 +2,40 @@
 var cityname="";
 var saveSearch=[];
 
+function displayLastSearch(){
+  if (localStorage.getItem("Searches") === null) {
+    cityname="Seattle";
+  }else{
+    let savedData= localStorage.getItem("Searches")
+    let getArray= JSON.parse(savedData);
+    cityname = getArray[getArray.length-1];
+    console.log(cityname);
+  } 
+    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+ cityname + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c";  //today's forcast
+    // Performing our AJAX GET request
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    })
+      // After the data comes back from the API
+      .then(function(response) {
+
+          console.log(response);
+
+        displayToday(response);
+        getFiveDay();
+        // showCity();
+        // saveCity();
+        
+        
+      });
+
+
+}
+
+
+
+
 // Event listener for all button elements
 $("#searchbtn").on("click", function() {
     event.preventDefault();
@@ -11,8 +45,7 @@ $("#searchbtn").on("click", function() {
 
     // Constructing a URL to search Giphy for the name of the person who said the quote
      var queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+ cityname + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c";  //today's forcast
-   // var queryURL = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityname + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c"; //5day forecast
-    // var queryURL= "http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID=86689c86634b54250ac08a4458bd5c6c" ;                                                             
+                                             
     // Performing our AJAX GET request
     $.ajax({
       url: queryURL,
@@ -72,7 +105,7 @@ $("#searchbtn").on("click", function() {
               var inhumid = response.list[i].main.humidity;
               inhumid = inhumid + " %";
               console.log("Humidity: " + inhumid);
-              $('#humid-'+i).text(inhumid);
+              $('#humid-'+i).text("Humidity: " + inhumid);
                
               days++;
             }
@@ -89,18 +122,12 @@ $("#searchbtn").on("click", function() {
         // Get city name
         cityname = response.name;
         console.log("city= " + cityname);
-        //save city name to local storage
-        // localStorage.setItem(cityname);
+       
         //Get date
         todaydate = moment().format('dddd, MMMM D, YYYY');
-        //create jquary for the date
-        // var newdiv= $(".row").addClass("row current-weather");
-        // var todaycity = $("<h3>").text(cityname + " ("+todaydate + ")");
+        
         $("#today-city").text(cityname + " (" +todaydate + ")");
-        //add class to today city
-        // todaycity.addClass("today-city");
-      
-        //  $(".current-weather").append(today-city);
+        
                 //***************get the icon
         var wicon = response.weather[0].icon;
         var wiconurl = "http://openweathermap.org/img/w/" + wicon + ".png"
@@ -108,7 +135,7 @@ $("#searchbtn").on("click", function() {
         //  var wiconEl = $("<img>").addClass("wiconEl");
          $('#today-icon').attr('src',wiconurl);
          $('#today-icon').attr('alt',"weather icon");
-      //  $("#today-city").append(wiconEl);
+      
 
         //get humidity
         var humidity = response.main.humidity;
@@ -118,15 +145,10 @@ $("#searchbtn").on("click", function() {
 
         //get temp
         var temp = response.main.temp;
-        // console.log("temp=" + temp);
-        // var tempdisplay= $("<p>").text("Temperature: " + temp + "°F");
         $("#current-temp").text("Temperature: " + temp + "°F");
         
         //get windspeed
         var windspeed = response.wind.speed;
-        // var windisplay = $("<p>").text("Wind Speed: " + windspeed + " MPH");
-        //  windisplay.addClass("today-disp");
-        //  $(".current-weather").append(windisplay);
         $("#current-wind").text("Wind Speed: " + windspeed + " MPH");
         
         //get Uv index
@@ -160,23 +182,40 @@ $("#searchbtn").on("click", function() {
 
      function saveCity(){
        console.log("savecity");
-       
-       saveSearch.push(cityname);
-       localStorage.setItem("Searches", JSON.stringify(saveSearch));
-      console.log("pushed city="+ cityname);
-      console.log(saveSearch);
-      
+       //get stored array
+       if (localStorage.getItem("Searches") === null) {
+          console.log("savecity searches is null");
+          saveSearch.push(cityname.toLowerCase());
+          localStorage.setItem("Searches", JSON.stringify(saveSearch));
+          console.log("pushed city="+ cityname);
+          console.log(saveSearch);
+      }else{
+        let savedData= localStorage.getItem("Searches")
+        let getArray= JSON.parse(savedData);
+        console.log("saveCity getarray" + getArray);
+        var found = getArray.includes(cityname.toLowerCase());
+        console.log("savecity found = " + found);
+        if(found === false){
+          console.log("saveCity city not found= " + cityname);
+          getArray.push(cityname.toLowerCase());
+          localStorage.setItem("Searches", JSON.stringify(getArray));
+          console.log("pushed city="+ cityname);
+          console.log(saveSearch);
+        }
+          
      }
+    }
 
      function showCity(){
        console.log("showcity");
+       //clear all displayed cities
+       $("#historybox").empty();
+
       if (localStorage.getItem("Searches") === null) {
       // do nothing
       }else{
         let retrievedData = localStorage.getItem("Searches");
         let recentArr = JSON.parse(retrievedData);
-
-        // recentArr.forEach(element => console.log(element));
         recentArr.forEach(function(city){
         console.log(city);
         var newbox = $("<div>");
