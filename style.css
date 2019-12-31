@@ -44,16 +44,16 @@ ul{
 
 
 .daybox{
-   width: 100%;
+   /* width: 100%; */
    display:flex;
    justify-content: space-between;
-   margin: 0;
+   /* margin: 0; */
 }
 
 .daycard{
     background: #5ba5df;
     color: white;
-    margin-right: 15px;
+    /* margin-right: 15px; */
     width: 130px;
      
 }
