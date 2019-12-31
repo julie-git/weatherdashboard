@@ -1,4 +1,4 @@
-# weatherdashboard
+# WeatherDashboard
 
 
 <p>The weather dashboard uses the OpenWeather API to find weather conditions on cities.  The user will be able to search on any city in the world and obtain weather information.</p>
@@ -31,4 +31,4 @@
 
   * Humidity
 
-![Weather Dahboard](weatherdashboard.jpg)
+![Weather Dahboard](weatherdashboard.jpg)   https://julie-git.github.io/weatherdashboard/
