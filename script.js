@@ -11,7 +11,7 @@ function displayLastSearch(){
     cityname = getArray[getArray.length-1];
     console.log(cityname);
   } 
-    var queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+ cityname + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c";  //today's forcast
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+ cityname + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c";  //today's forcast
     // Performing our AJAX GET request
     $.ajax({
       url: queryURL,
@@ -37,7 +37,7 @@ function getSavedCity(savedcity){
      console.log("get Saved city=" + savedcity);
 
     // Constructing a URL to search openweather Api for the city
-     var queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+ savedcity + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c";  //today's forcast
+     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+ savedcity + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c";  //today's forcast
                                              
     // Performing our AJAX GET request
     $.ajax({
@@ -62,8 +62,7 @@ function getSavedCity(savedcity){
 
       function getFiveDay(){
           // Constructing a URL to search Giphy for the name of the person who said the quote
-      //  var queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+ cityname + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c";  //today's forcast
-        var queryURL2 = "http://api.openweathermap.org/data/2.5/forecast?q=" + cityname + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c"; //5day forecast
+        var queryURL2 = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityname + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c"; //5day forecast
                                                            
         // Performing our AJAX GET request
         $.ajax({
@@ -89,7 +88,7 @@ function getSavedCity(savedcity){
 
               var tempicon = response.list[i].weather[0].icon;
               console.log("tempicon=" +tempicon)
-              var iconurl = "http://openweathermap.org/img/w/" + tempicon + ".png"
+              var iconurl = "https://openweathermap.org/img/w/" + tempicon + ".png"
               console.log(iconurl);
               $('#tempicon-'+i).attr('src',iconurl);
 
@@ -125,7 +124,7 @@ function getSavedCity(savedcity){
         
                 //***************get the icon
         var wicon = response.weather[0].icon;
-        var wiconurl = "http://openweathermap.org/img/w/" + wicon + ".png"
+        var wiconurl = "https://openweathermap.org/img/w/" + wicon + ".png"
         //  console.log(wiconurl);
          $('#today-icon').attr('src',wiconurl);
          $('#today-icon').attr('alt',"weather icon");
@@ -153,7 +152,7 @@ function getSavedCity(savedcity){
       }
 
       function getUVIndex(lat,long){
-        var queryURL3 = "http://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + long + "&APPID=86689c86634b54250ac08a4458bd5c6c"; //5day forecast
+        var queryURL3 = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + long + "&APPID=86689c86634b54250ac08a4458bd5c6c"; //5day forecast
         // var queryURL= "http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID=86689c86634b54250ac08a4458bd5c6c" ;                                                             
         // Performing our AJAX GET request
         $.ajax({
@@ -241,7 +240,7 @@ $("#searchbtn").on("click", function() {
    console.log("searchbtn city=" + cityname);
 
   // Constructing a URL to search Giphy for the name of the person who said the quote
-   var queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+ cityname + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c";  //today's forcast
+   var queryURL = "https://api.openweathermap.org/data/2.5/weather?q="+ cityname + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c";  //today's forcast
                                            
   // Performing our AJAX GET request
   $.ajax({
