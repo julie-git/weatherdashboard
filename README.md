@@ -1,6 +1,6 @@
-# WeatherDashboard       https://julie-git.github.io/weatherdashboard/
+# WeatherDashboard      
 
-
+ https://julie-git.github.io/weatherdashboard/
 <p>The weather dashboard uses the OpenWeather API to find weather conditions on cities.  The user will be able to search on any city in the world and obtain weather information.</p>
 
  Display the following under current weather conditions:
