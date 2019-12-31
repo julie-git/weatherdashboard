@@ -24,23 +24,20 @@ function displayLastSearch(){
 
         displayToday(response);
         getFiveDay();
-               
-        
+            
+       
       });
-
-
 }
 
 
 
-
-function getSavedCity(){
+function getSavedCity(savedcity){
     console.log("getSaveddity");
-      cityname = $(e.target).text();
-     console.log("get Saved city=" + cityname);
+      // cityname = $(e.target).text();
+     console.log("get Saved city=" + savedcity);
 
-    // Constructing a URL to search Giphy for the name of the person who said the quote
-     var queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+ cityname + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c";  //today's forcast
+    // Constructing a URL to search openweather Api for the city
+     var queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+ savedcity + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c";  //today's forcast
                                              
     // Performing our AJAX GET request
     $.ajax({
@@ -55,8 +52,7 @@ function getSavedCity(){
         displayToday(response);
         getFiveDay();
         showCity();
-        // saveCity();
-        
+    
          
       });
 
@@ -130,8 +126,7 @@ function getSavedCity(){
                 //***************get the icon
         var wicon = response.weather[0].icon;
         var wiconurl = "http://openweathermap.org/img/w/" + wicon + ".png"
-         console.log(wiconurl);
-        //  var wiconEl = $("<img>").addClass("wiconEl");
+        //  console.log(wiconurl);
          $('#today-icon').attr('src',wiconurl);
          $('#today-icon').attr('alt',"weather icon");
       
@@ -174,8 +169,6 @@ function getSavedCity(){
             console.log(uvindex);
             $("#current-uv").text("UV Index: " + uvindex);
 
-
-
       });
      }
 
@@ -183,23 +176,23 @@ function getSavedCity(){
        console.log("savecity");
        //get stored array
        if (localStorage.getItem("Searches") === null) {
-          console.log("savecity searches is null");
+          // console.log("savecity searches is null");
           saveSearch.push(cityname.toLowerCase());
           localStorage.setItem("Searches", JSON.stringify(saveSearch));
-          console.log("pushed city="+ cityname);
-          console.log(saveSearch);
+          // console.log("pushed city="+ cityname);
+          // console.log(saveSearch);
       }else{
         let savedData= localStorage.getItem("Searches")
         let getArray= JSON.parse(savedData);
-        console.log("saveCity getarray" + getArray);
+        // console.log("saveCity getarray" + getArray);
         var found = getArray.includes(cityname.toLowerCase());
         console.log("savecity found = " + found);
         if(found === false){
-          console.log("saveCity city not found= " + cityname);
+          // console.log("saveCity city not found= " + cityname);
           getArray.push(cityname.toLowerCase());
           localStorage.setItem("Searches", JSON.stringify(getArray));
-          console.log("pushed city="+ cityname);
-          console.log(saveSearch);
+          // console.log("pushed city="+ cityname);
+          // console.log(saveSearch);
         }
           
      }
@@ -209,6 +202,7 @@ function getSavedCity(){
        console.log("showcity");
        //clear all displayed cities
       //  $("#historybox").empty();
+       $("#historylist").empty();
 
       if (localStorage.getItem("Searches") === null) {
       // do nothing
@@ -217,23 +211,26 @@ function getSavedCity(){
         let recentArr = JSON.parse(retrievedData);
         recentArr.forEach(function(city){
         console.log(city);
-        // var newbox = $("<div>");
-        // newbox.addClass("row card savecard");
-        // newbox.text(city);
+        var capCity = titleCase(city);
+        console.log(capCity);
         var newbox= $("<li>");
         newbox.addClass("list-group-item");
-        newbox.text(city);
+        newbox.text(capCity);
         $("#historybox ul").append(newbox);
 
         });
        
      }}
 
+
+     //******** Click event for detecting clicks on the history list
+
      $(document).on("click",".list-group-item",function(e){
       event.preventDefault();
        console.log("you clicked list item")
-        cityname  = $(e.target).text();
-        console.log(cityname);
+        var savedcity  = $(e.target).text();
+        console.log(savedcity);
+        getSavedCity(savedcity);
      })
 
      // Event listener for all button elements
@@ -272,9 +269,16 @@ $("#searchbtn").on("click", function() {
     console.log(cityname);
   }
 
-
-  // $("historylist li").click(function(e) {
-  //   console.log("clicked li")
-  //   cityname = $(e.target).text();
-  //   console.log(cityname);
-  // });
+  
+  function titleCase(str) {
+    var splitStr = str.toLowerCase().split(' ');
+    for (var i = 0; i < splitStr.length; i++) {
+        // You do not need to check if i is larger than splitStr length, as your for does that for you
+        // Assign it back to the array
+        splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+    }
+    // Directly return the joined string
+    return splitStr.join(' '); 
+ }
+ 
+ 
