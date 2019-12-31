@@ -24,9 +24,7 @@ function displayLastSearch(){
 
         displayToday(response);
         getFiveDay();
-        // showCity();
-        // saveCity();
-        
+               
         
       });
 
@@ -36,12 +34,10 @@ function displayLastSearch(){
 
 
 
-// Event listener for all button elements
-$("#searchbtn").on("click", function() {
-    event.preventDefault();
-    // In this case, the "this" keyword refers to the button that was clicked
-     cityname = $("#search-text").val();
-     console.log("searchbtn city=" + cityname);
+function getSavedCity(){
+    console.log("getSaveddity");
+      cityname = $(e.target).text();
+     console.log("get Saved city=" + cityname);
 
     // Constructing a URL to search Giphy for the name of the person who said the quote
      var queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+ cityname + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c";  //today's forcast
@@ -59,11 +55,14 @@ $("#searchbtn").on("click", function() {
         displayToday(response);
         getFiveDay();
         showCity();
-        saveCity();
+        // saveCity();
         
          
       });
-    });
+
+}
+
+
 
       function getFiveDay(){
           // Constructing a URL to search Giphy for the name of the person who said the quote
@@ -209,7 +208,7 @@ $("#searchbtn").on("click", function() {
      function showCity(){
        console.log("showcity");
        //clear all displayed cities
-       $("#historybox").empty();
+      //  $("#historybox").empty();
 
       if (localStorage.getItem("Searches") === null) {
       // do nothing
@@ -218,11 +217,64 @@ $("#searchbtn").on("click", function() {
         let recentArr = JSON.parse(retrievedData);
         recentArr.forEach(function(city){
         console.log(city);
-        var newbox = $("<div>");
-        newbox.addClass("row card savecard");
+        // var newbox = $("<div>");
+        // newbox.addClass("row card savecard");
+        // newbox.text(city);
+        var newbox= $("<li>");
+        newbox.addClass("list-group-item");
         newbox.text(city);
-        $('#historybox').append(newbox);
+        $("#historybox ul").append(newbox);
 
         });
        
      }}
+
+     $(document).on("click",".list-group-item",function(e){
+      event.preventDefault();
+       console.log("you clicked list item")
+        cityname  = $(e.target).text();
+        console.log(cityname);
+     })
+
+     // Event listener for all button elements
+$("#searchbtn").on("click", function() {
+  event.preventDefault();
+  // In this case, the "this" keyword refers to the button that was clicked
+   cityname = $("#search-text").val();
+   console.log("searchbtn city=" + cityname);
+
+  // Constructing a URL to search Giphy for the name of the person who said the quote
+   var queryURL = "http://api.openweathermap.org/data/2.5/weather?q="+ cityname + "&units=imperial&APPID=86689c86634b54250ac08a4458bd5c6c";  //today's forcast
+                                           
+  // Performing our AJAX GET request
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+  })
+    // After the data comes back from the API
+    .then(function(response) {
+
+        console.log(response);
+
+      displayToday(response);
+      getFiveDay();
+      showCity();
+      saveCity();
+      
+       
+    });
+  });
+
+  function myclick(e){
+    event.preventDefault();
+    console.log("clicked li")
+    var newcity  = $(e.target).text();
+    console.log(cityname);
+  }
+
+
+  // $("historylist li").click(function(e) {
+  //   console.log("clicked li")
+  //   cityname = $(e.target).text();
+  //   console.log(cityname);
+  // });

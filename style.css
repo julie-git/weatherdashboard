@@ -17,13 +17,15 @@ ul{
     list-style: none;
     border: 2px;
     /* border-color: tomato; */
+    margin-left: -55px;
 }
 
 #searchbtn{
  background: #5ba5df;
  color: white;
  margin-left: 10px;
- 
+ float: right;
+ margin-top: 10px;
 
 }
 
